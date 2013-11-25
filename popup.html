@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="jquery.min.js" type="text/javascript"></script>
+    <script src="bower_components/angular/angular.min.js"></script>
+    <script src="bower_components/angular/angular-resource.min.js"></script>
+	<script src="codemirror/lib/codemirror.js"></script>
+	<link rel="stylesheet" type="text/css" href="codemirror/lib/codemirror.css">
+	<link rel="stylesheet" type="text/css" href="codemirror/theme/paraiso-dark.css">
+	<link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+	<script src="codemirror/mode/python/python.js"></script>
+	<script src="popup.js"></script>
+</head>
+<body ng-app="gistApp" ng-csp>
+	<div ng-controller="AppCtrl" style="width:400px; height:300px">
+		<div class="form-group">
+			<input placeholder="filename" type="text" name="filename" ng-model="filename" />
+		</div>
+		<div class="form-group">
+			<input placeholder="description" type="text" style="width:98%" id="desc" ng-model="description" />
+		</div>
+		<textarea id="codecontent" ng-model="content"></textarea>
+		<button class="btn btn-default" ng-click="savegist()">Create Gist</button>
+		<div id='ref'><a href="{{url}}">{{url}}</a>
+	</div>
+</body>
+</html>
