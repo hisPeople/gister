@@ -1,6 +1,6 @@
 function save_options() {
 	var select = document.getElementById("def-lang");
-	var defLang = select.children[select.selectedIndex].value;
+	var defLang = select.children[select.selectedIndex].value.toLowerCase();
 	console.log("default_language: " + defLang)
 	localStorage["default_language"] = defLang;
 

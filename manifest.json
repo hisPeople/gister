@@ -1,12 +1,12 @@
 {
 	"manifest_version": 2,
 
-	"name": "The Gist of It",
+	"name": "SimpleGist",
 	"description": "A simple extension for creating GitHub Gists",
 	"version": "0.1",
 
 	"browser_action": {
-		"default_icon": "icon16.png",
+		"default_icon": "icon48.png",
 		"default_popup": "popup.html"
 	},
 
@@ -16,6 +16,22 @@
 		"16": "icon16.png",
 		"48": "icon48.png",
 		"128": "icon128.png"
-	}
+	},
+
+	"content_scripts": [
+		{
+			"matches": ["https://github.com/robots.txt*"],
+			"js": ["oauth2/oauth2_inject.js"],
+			"run_at": "document_start"
+		}
+	],
+
+	"permissions": [
+		"https://github.com/login/oauth/access_token"
+	],
+
+	"web_accessible_resources": [
+		"oauth2/oauth2.html"
+	]
 
 }
