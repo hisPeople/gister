@@ -45,6 +45,7 @@ gists.controller('AppCtrl', ['$scope', 'Gist', function($scope, Gist) {
 	$scope.filename = '';
 	$scope.content = '';
 	$scope.cmirror = null;
+	$scope.public = false;
 
 	$scope.showExtras = function() {
 		$('#filename').toggle();
@@ -85,7 +86,7 @@ gists.controller('AppCtrl', ['$scope', 'Gist', function($scope, Gist) {
 
 		var gist = new Gist();
 		gist.description = $scope.description;
-		gist.public = true;
+		gist.public = $scope.public;
 		gist.files = file;
 		gist.$save().then(function(resp) {
 			$scope.url = resp['html_url'];

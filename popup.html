@@ -31,6 +31,7 @@
 		Language: <select ng-model="mode" ng-options="m for m in modes" ng-change="modeChanged()"></select>
 		<ui-codemirror ui-codemirror-opts="editorOptions" ng-model="content"></ui-codemirror>	
 		<button class="btn btn-default" ng-click="savegist()">Create Gist</button>
+		make public <input type="checkbox" ng-model="public" />
 		<div id='ref'><a href="{{url}}">{{url}}</a>
 	</div>
 </body>
