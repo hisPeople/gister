@@ -21,13 +21,13 @@
 	<div ng-controller="AppCtrl" style="width:400px; height:300px">
 		<div ng-click="showExtras()">
 			Extras >>>
+		</div>
 			<div id="filename" class="form-group">
 				<input placeholder="filename" type="text" name="filename" ng-model="filename" />
 			</div>
 			<div id="description" class="form-group">
 				<input placeholder="description" type="text" style="width:98%" id="desc" ng-model="description" />
 			</div>
-		</div>
 		Language: <select ng-model="mode" ng-options="m for m in modes" ng-change="modeChanged()"></select>
 		<ui-codemirror ui-codemirror-opts="editorOptions" ng-model="content"></ui-codemirror>	
 		<button class="btn btn-default" ng-click="savegist()">Create Gist</button>
