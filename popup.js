@@ -1,4 +1,4 @@
-if(localStorage['oauth2_github']) {
+if(localStorage['oauth2_github'] && $.parseJSON(localStorage['oauth2_github']).accessToken) {
 	var oauth2_github = $.parseJSON(localStorage['oauth2_github']);
 	var accessToken = oauth2_github.accessToken;
 	console.log(accessToken)
