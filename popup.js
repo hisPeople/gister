@@ -52,6 +52,19 @@ gists.controller('AppCtrl', ['$scope', 'Gist', function($scope, Gist) {
 		$('#description').toggle();
 	}
 
+	$scope.popout = function() {
+		console.log('popout?')
+		chrome.windows.create(
+			{
+				type: 'popup',
+				focused: true,
+				url: 'popup.html',
+				width: 415,
+				height:425
+			}	
+		)
+	}
+
 	$scope.editorOptions = {
 		lineNumbers: true,
 		mode: defLang,
