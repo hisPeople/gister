@@ -1,7 +1,6 @@
 if(localStorage['oauth2_github'] && $.parseJSON(localStorage['oauth2_github']).accessToken) {
 	var oauth2_github = $.parseJSON(localStorage['oauth2_github']);
 	var accessToken = oauth2_github.accessToken;
-	console.log(accessToken)
 } else {
 	var githubAuth = new OAuth2('github', {
 		client_id: 'fd73a3d2274ee7dc2d59',
@@ -10,15 +9,8 @@ if(localStorage['oauth2_github'] && $.parseJSON(localStorage['oauth2_github']).a
 	});
 
 	githubAuth.authorize(function() {
-		// ready to go. let's get the access token
 		var token = githubAuth.getAccessToken();
-		console.log(token)
 	});
-}
-
-
-for (var i = 0; i < localStorage.length; i++) {
-	console.log(localStorage[i])
 }
 
 var gists = angular.module('gistApp', ['ngResource', 'ui.codemirror']);
@@ -53,7 +45,6 @@ gists.controller('AppCtrl', ['$scope', 'Gist', function($scope, Gist) {
 	}
 
 	$scope.popout = function() {
-		console.log('popout?')
 		chrome.windows.create(
 			{
 				type: 'popup',
@@ -79,8 +70,6 @@ gists.controller('AppCtrl', ['$scope', 'Gist', function($scope, Gist) {
 				}
 				cm.focus();
 			};
-			console.log('cmirror loaded');
-			console.log($scope.cmirror)
 			$scope.cmirror.focus();
 		}
 	};
