@@ -16,10 +16,12 @@ if(localStorage['oauth2_github'] && $.parseJSON(localStorage['oauth2_github']).a
 var gists = angular.module('gistApp', ['ngResource', 'ui.codemirror']);
 
 gists.factory('Gist', function($resource) {
-	return $resource('https://api.github.com/gists?access_token=' + accessToken,{})
+	return $resource('https://api.github.com/gists?access_token=' + accessToken, {}, {
+		'getGists': {method:'GET', isArray:true, responseType:'json'}
+	})
 });
 
-gists.controller('AppCtrl', ['$scope', 'Gist', function($scope, Gist) {
+gists.controller('AppCtrl', ['$scope', 'Gist', '$resource', function($scope, Gist, $resource) {
 	$('#filename').hide()
 	$('#description').hide()
 	fileExtensions = {'python': 'py', 'javascript': 'js', 'java': 'java', 'c': 'c', 'c++': 'cpp', 'c#': 'cs', 'markdown': 'md', 'ruby': 'rb'}
@@ -38,6 +40,59 @@ gists.controller('AppCtrl', ['$scope', 'Gist', function($scope, Gist) {
 	$scope.content = '';
 	$scope.cmirror = null;
 	$scope.public = false;
+	$scope.tags = {};
+
+	var query = Gist.getGists(function (response) {
+		angular.forEach(response, function(item, index) {
+			var innergist = {}
+			angular.forEach(item, function(val, key) {
+				if (key == 'description') {
+					parseTags(val, item);
+				}
+			})
+		})
+	});
+
+	var tags = [];
+	var categories = [];
+	var hashtagPattern = /(^|\s)#([^\s]+)/g;
+
+	var parseTags = function(desc, obj) {
+		if(desc != '') {
+			tags = desc.match(hashtagPattern);
+			if (tags != null) {
+				// console.log(desc)
+				// console.log(tags)
+				createTags(tags, obj);
+				// console.log(obj)
+			}
+		}
+	}
+
+	var createTags = function(tags, obj) {
+		// console.log("TAGS " + tags)
+		for (var t in tags) {
+			var tag = tags[t]
+			// console.log(tag)
+			var trimmedtag = $.trim(tag);
+			// console.log(trimmedtag)
+			var dehashedtag = trimmedtag.replace('#', '')
+			// console.log(tags[t] + ' ==> ' + dehashedtag)
+
+			if(!$scope.tags[dehashedtag]) {
+				console.log(dehashedtag + " was not found... creating tag")
+				$scope.tags[dehashedtag]= []
+			} else {
+				console.log(dehashedtag + " was found")
+			}
+
+			$scope.tags[dehashedtag].push(obj)
+			// console.log("tags." + dehashedtag + ": " + $scope.tags[dehashedtag])
+		}
+		// console.log($scope.tags)
+	}
+
+	console.log($scope.tags)
 
 	$scope.showExtras = function() {
 		$('#filename').toggle();
@@ -92,6 +147,17 @@ gists.controller('AppCtrl', ['$scope', 'Gist', function($scope, Gist) {
 		gist.files = file;
 		gist.$save().then(function(resp) {
 			$scope.url = resp['html_url'];
+			$scope.tags = {};
+			var query = Gist.getGists(function (response) {
+				angular.forEach(response, function(item, index) {
+					var innergist = {}
+					angular.forEach(item, function(val, key) {
+						if (key == 'description') {
+							parseTags(val, item);
+						}
+					})
+				})
+			});
 		});
 	}
 }]);

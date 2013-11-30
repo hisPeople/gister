@@ -33,6 +33,21 @@
 		<button class="btn btn-default" ng-click="savegist()">Create Gist</button>
 		make public <input type="checkbox" ng-model="public" /> <span class="pull-right glyphicon glyphicon-new-window" ng-click="popout()"></span>
 		<div id='ref'><a href="{{url}}">{{url}}</a>
+		
+		<div ng-repeat="(key, val) in tags">
+			<div>
+				<h3>{{key}}</h3>
+				<div ng-repeat="gist in val">
+					<h5><a href="{{gist.html_url}}">{{gist.description}}</a></h5>
+					<div> Files 
+						<ul ng-repeat="(filename, values) in gist.files">
+							<li>{{filename}}</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
+
 </body>
 </html>
