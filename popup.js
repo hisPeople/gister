@@ -13,7 +13,7 @@ if(localStorage['oauth2_github'] && $.parseJSON(localStorage['oauth2_github']).a
 	});
 }
 
-var gists = angular.module('gistApp', ['ngResource', 'ui.codemirror']);
+var gists = angular.module('gistApp', ['ngResource', 'ui.ace']);
 
 gists.factory('Gist', function($resource) {
 	return $resource('https://api.github.com/gists?access_token=' + accessToken, {}, {
@@ -38,7 +38,7 @@ gists.controller('AppCtrl', ['$scope', 'Gist', '$resource', function($scope, Gis
 	$scope.description = '';
 	$scope.filename = '';
 	$scope.content = '';
-	$scope.cmirror = null;
+	// $scope.cmirror = null;
 	$scope.public = false;
 	$scope.tags = {};
 
@@ -111,23 +111,30 @@ gists.controller('AppCtrl', ['$scope', 'Gist', '$resource', function($scope, Gis
 		)
 	}
 
-	$scope.editorOptions = {
-		lineNumbers: true,
-		mode: defLang,
-		autofocus: true,
-		onLoad: function(cm) {
-			$scope.cmirror = cm;
-			$scope.modeChanged = function() {
-				if ($.inArray($scope.mode, clikelangs) > -1) {
-					cm.setOption("mode", "clike");
-				} else {
-					cm.setOption("mode", $scope.mode);
-				}
-				cm.focus();
-			};
-			$scope.cmirror.focus();
-		}
-	};
+	$scope.aceLoaded = function(editor) {
+		var renderer = editor.renderer;
+
+		editor.setReadOnly(false);
+		renderer.setShowGutter(true);
+	}
+
+	// $scope.editorOptions = {
+	// 	lineNumbers: true,
+	// 	mode: defLang,
+	// 	autofocus: true,
+	// 	onLoad: function(cm) {
+	// 		$scope.cmirror = cm;
+	// 		$scope.modeChanged = function() {
+	// 			if ($.inArray($scope.mode, clikelangs) > -1) {
+	// 				cm.setOption("mode", "clike");
+	// 			} else {
+	// 				cm.setOption("mode", $scope.mode);
+	// 			}
+	// 			cm.focus();
+	// 		};
+	// 		$scope.cmirror.focus();
+	// 	}
+	// };
 
 	var getFileExtension = function(mode) {
 		return fileExtensions[mode]
