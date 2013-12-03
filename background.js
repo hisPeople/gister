@@ -6,3 +6,15 @@
 // 	'consumer_secret': '328dd08f528d99b715f6e55732f3cd66d7bdb4ec',
 // 	'scope': 'gist',
 // });
+
+chrome.browserAction.onClicked.addListener(function() {
+	chrome.windows.create(
+			{
+				type: 'popup',
+				focused: true,
+				url: 'popup.html',
+				width: 415,
+				height:425
+			}	
+		)
+})

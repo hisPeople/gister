@@ -21,6 +21,12 @@ gists.factory('Gist', function($resource) {
 	})
 });
 
+// window.onresize = function() {
+// 	// console.log("window resized");
+// 	$scope.editorWidth = $(window).width();
+// 	$scope.editorHeight = $(window).window();
+// }
+
 gists.controller('AppCtrl', ['$scope', 'Gist', '$resource', function($scope, Gist, $resource) {
 	$('#filename').hide()
 	$('#description').hide()

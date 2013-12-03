@@ -36,10 +36,11 @@
   			}" ng-model="content">
   		</div>
 		<button class="btn btn-default" ng-click="savegist()">Create Gist</button>
-		make public <input type="checkbox" ng-model="public" /> <span class="pull-right glyphicon glyphicon-new-window" ng-click="popout()"></span>
+		make public <input type="checkbox" ng-model="public" /> 
+		<!-- <span class="pull-right glyphicon glyphicon-new-window" ng-click="popout()"></span> -->
 		<div id='ref'><a href="{{url}}">{{url}}</a>
 		
-		<div ng-repeat="(key, val) in tags">
+<!-- 		<div ng-repeat="(key, val) in tags">
 			<div>
 				<h3>{{key}}</h3>
 				<div ng-repeat="gist in val">
@@ -51,7 +52,7 @@
 					</div>
 				</div>
 			</div>
-		</div>
+		</div> -->
 	</div>
 
 </body>
